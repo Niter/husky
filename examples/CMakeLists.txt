@@ -126,3 +126,21 @@ add_executable(TriangleCounting triangle_counting.cpp)
 target_link_libraries(TriangleCounting ${husky})
 target_link_libraries(TriangleCounting ${HUSKY_EXTERNAL_LIB})
 husky_default_properties(TriangleCounting)
+
+# Alternating Least Squares
+add_executable(ALS als.cpp)
+target_link_libraries(ALS ${husky})
+target_link_libraries(ALS ${HUSKY_EXTERNAL_LIB})
+husky_default_properties(ALS)
+
+# Triangle counting
+add_executable(TriangleCounting triangle_counting.cpp)
+target_link_libraries(TriangleCounting ${husky})
+target_link_libraries(TriangleCounting ${HUSKY_EXTERNAL_LIB})
+husky_default_properties(TriangleCounting)
+
+# Alternating Least Squares
+add_executable(ALS als.cpp)
+target_link_libraries(ALS ${husky})
+target_link_libraries(ALS ${HUSKY_EXTERNAL_LIB})
+husky_default_properties(ALS)
