@@ -11,24 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-// Example of configuration
-//
-// master_host=master
-// master_port=15444
-// comm_port=19832
-// hdfs_namenode=master
-// hdfs_namenode_port=9000
-// input=hdfs:///datasets/ml/netflix
-// 
-// # For Master
-// serve=1
-// 
-// # Session for worker information
-// [worker]
-// # info=master:1
-// info=w1:20
-// info=w2:20
 
 #include <algorithm>
 #include <random>
@@ -216,7 +198,6 @@ void als() {
         husky::list_execute(als_list, {&factors_push_channel}, {&factors_push_channel}, [&] (ALSNode & node) {
             // If I'm type 0 and I'm initing, send msg
             if(node.active == false) {
-                // if (node.ever_active == false) node.broadcast(factors_push_channel);
                 node.active = true;
                 return;
             } else {
@@ -243,10 +224,7 @@ void als() {
                 // TODO
                 // husky::LOG_I << "added regularization";
                 node.factors = sum_mat.selfadjointView<Eigen::Upper>().ldlt().solve(sum_vec);
-                // husky::LOG_I << "solved factors";
-                // if (node.get_iter() != ALSNode::iter-1)
                 node.broadcast(factors_push_channel);
-                // husky::LOG_I << "broadcasted";
                 node.active = false;
             }
         });
@@ -282,8 +260,6 @@ void als() {
 			pred = std::max(1., pred);
 			pred = std::min(5., pred);
 			double loss = pred - rating;
-            // husky::LOG_I << "pred: " << pred;
-            // husky::LOG_I << "rating: " << rating;
 			loss *= loss;
 			rmse_agg.update(loss);
             num_rating_agg.update(1);
